@@ -1,4 +1,4 @@
-package library_project.app_start;
+package library_project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

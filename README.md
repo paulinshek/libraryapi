@@ -1,12 +1,12 @@
 # libraryapi
 RESTful API for a library
 
-# Dependencies
+### Dependencies
 
 * spring
 * maven
 
-# How to use
+### How to use
 
 ```
 mvn compile

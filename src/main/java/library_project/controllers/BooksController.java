@@ -13,9 +13,10 @@ public class BooksController {
     private static final String template = "Hello, %s!";
     private final AtomicLong counter = new AtomicLong();
 
-    @RequestMapping("/greeting")
-    public Book greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return new Book(counter.incrementAndGet(),
-                            String.format(template, name));
-    }
+//    @RequestMapping("/greeting")
+//    public Book greeting(@RequestParam(value="name", defaultValue="World") String name) {
+//        return new Book(counter.incrementAndGet(),
+//                            String.format(template, name));
+//    }
+
 }
