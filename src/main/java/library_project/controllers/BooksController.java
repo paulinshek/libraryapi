@@ -1,22 +1,49 @@
 package library_project.controllers;
 
+import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicLong;
 
+import library_project.Repos.NoEntityException;
+import library_project.Repos.Repository;
 import library_project.models.Book;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("api")
 public class BooksController {
 
-    private static final String template = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    private Repository<Book> bookRepo;
 
-//    @RequestMapping("/greeting")
-//    public Book greeting(@RequestParam(value="name", defaultValue="World") String name) {
-//        return new Book(counter.incrementAndGet(),
-//                            String.format(template, name));
-//    }
+    public BooksController(Repository<Book> bookRepository)
+    {
+        bookRepo = bookRepository;
+    }
 
+    @RequestMapping("/books")
+    public Iterator<Book> get()
+    {
+        return bookRepo.getAll();
+    }
+
+    @RequestMapping("/values/{id}")
+    public Book get(@PathVariable("id") int id) throws NoEntityException {
+        return bookRepo.get(id);
+    }
+
+    @RequestMapping(value="api/values",method=RequestMethod.POST)
+    public void post(Book newBook)
+    {
+        bookRepo.add(newBook);
+    }
+
+    @RequestMapping(value="/values/{id}",method=RequestMethod.DELETE)
+    public void delete(int id) throws NoEntityException {
+        bookRepo.remove(id);
+    }
+
+    // PUT api/values/{int}
+    public void put(Book newBook)
+    {
+        // TODO
+    }
 }
