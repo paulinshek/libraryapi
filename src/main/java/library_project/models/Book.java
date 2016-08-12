@@ -8,6 +8,13 @@ public class Book {
     private String author;
     private String publishDate;
 
+    public Book(String isbn, String title, String author, String publishDate) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.publishDate = publishDate;
+    }
+
     public int getId() {
         return id;
     }
