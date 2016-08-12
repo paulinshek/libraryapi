@@ -19,7 +19,7 @@ public class BookRepository implements Repository<Book> {
     @Override
     public Book get(int id) throws NoEntityException {
         Iterator<Book> bookIterator = bookRepository.iterator();
-        Book currBook = new Book();
+        Book currBook = null;
         boolean found = false;
 
         while (bookIterator.hasNext() & !found){
