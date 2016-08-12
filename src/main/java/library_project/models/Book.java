@@ -9,22 +9,6 @@ public class Book {
     private String author;
     private String publishDate;
 
-    public Book(String isbn, String title, String author, String publishDate) {
-        this.id = getNextId();
-        this.isbn = isbn;
-        this.title = title;
-        this.author = author;
-        this.publishDate = publishDate;
-    }
-
-    public Book() {
-        this.id = 0;
-        this.isbn = "";
-        this.title = "";
-        this.author = "";
-        this.publishDate = "";
-    }
-
     private int getNextId(){
         COUNT+= 1;
         return COUNT;

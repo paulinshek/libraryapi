@@ -1,4 +1,4 @@
-package library_project.Repos;
+package library_project.repos;
 
 import library_project.models.Book;
 
@@ -21,6 +21,7 @@ public class BookRepository implements Repository<Book> {
         Iterator<Book> bookIterator = bookRepository.iterator();
         Book currBook = new Book();
         boolean found = false;
+
 
         while (bookIterator.hasNext() & !found){
             currBook = bookIterator.next();

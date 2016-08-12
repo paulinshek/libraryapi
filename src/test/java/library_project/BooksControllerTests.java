@@ -38,7 +38,7 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
-public class GreetingControllerTests {
+public class BooksControllerTests {
 
 	@Autowired
 	private WebApplicationContext ctx;
