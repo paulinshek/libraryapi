@@ -2,25 +2,17 @@ package library_project.models;
 
 public class Book {
 
-    private static int COUNT = 0;
     private int id;
     private String isbn;
     private String title;
     private String author;
     private String publishDate;
 
-    private int getNextId(){
-        COUNT+= 1;
-        return COUNT;
-    }
-
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(int id) { this.id = id; }
 
     public String getIsbn() {
         return isbn;

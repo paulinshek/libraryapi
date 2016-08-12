@@ -18,19 +18,19 @@ public class BooksController {
         bookRepo = new BookRepository();
     }
 
-    @RequestMapping("/books")
+    @RequestMapping(value="/books",method=RequestMethod.GET)
     public Iterator<Book> get()
     {
         return bookRepo.getAll();
     }
 
-    @RequestMapping("/values/{id}")
+    @RequestMapping(value="/values/{id}",method=RequestMethod.GET)
     public Book get(@PathVariable("id") int id) throws NoEntityException {
         return bookRepo.get(id);
     }
 
     @RequestMapping(value="/values",method=RequestMethod.POST)
-    public void post(Book newBook)
+    public void post(@RequestBody Book newBook)
     {
         bookRepo.add(newBook);
     }
@@ -40,9 +40,10 @@ public class BooksController {
         bookRepo.remove(id);
     }
 
-    @RequestMapping(value="api/values/{id}", method=RequestMethod.PUT)
-    public void put(Book newBook)
+    @RequestMapping(value="/values/{id}", method=RequestMethod.PUT)
+    public void put(@RequestBody Book newBook, @PathVariable("id") int id)
     {
-        // TODO
+        bookRepo.add(newBook);
+        newBook.setId(id);
     }
 }

@@ -22,7 +22,6 @@ public class BookRepository implements Repository<Book> {
         Book currBook = new Book();
         boolean found = false;
 
-
         while (bookIterator.hasNext() & !found){
             currBook = bookIterator.next();
             found = currBook.getId() == id;
@@ -40,6 +39,7 @@ public class BookRepository implements Repository<Book> {
 
     @Override
     public void add(Book book) {
+        book.setId(bookRepository.size());
         bookRepository.add(book);
     }
 
