@@ -35,7 +35,6 @@ public class ReservationRepository implements Repository<Reservation> {
     }
 
     @Override
-    // TODO: reservation id must be unique
     public synchronized void add(Reservation reservation) {
         allReservations.add(reservation);
     }

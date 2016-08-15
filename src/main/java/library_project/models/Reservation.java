@@ -12,14 +12,16 @@ public class Reservation {
     private Calendar startDate;
     private Calendar endDate;
     private boolean out;
+    private static int COUNT;
 
-    public Reservation(int reservationId, int bookId) {
+    public Reservation(int bookId) {
         startDate = Calendar.getInstance();
 
         endDate = Calendar.getInstance();
         endDate.add(Calendar.DAY_OF_YEAR, 14);
 
-        this.reservationId = reservationId;
+        this.reservationId = COUNT;
+        COUNT++;
         this.bookId = bookId;
 
         out = true;
