@@ -8,7 +8,7 @@ import library_project.models.Book;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("api/books")
 public class BooksController {
     private Repository<Book> bookRepo;
 
