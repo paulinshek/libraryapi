@@ -3,43 +3,77 @@ package library_project.controllers;
 import library_project.models.Book;
 import library_project.models.BookIsOutException;
 import library_project.models.Library;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import library_project.models.Reservation;
+import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.Iterator;
 
 /**
  * Created by pshek on 12/08/2016.
  */
 @RestController
-@RequestMapping("library")
+@RequestMapping("api/library")
 public class LibraryController {
     private Library library;
 
     public LibraryController() {
         library = new Library();
     }
+
+    /*
+     * Get all available books
+     */
+    @RequestMapping(value="/group/availableBooks", method=RequestMethod.GET)
     public Iterator<Book> getAllAvailableBooks(){
         return library.getAllAvailableBooks();
     }
 
+    /*
+     * Get all unavailableBooks
+     */
+    @RequestMapping(value="/group/unavailableBooks", method=RequestMethod.GET)
     public Iterator<Book> getAllUnavailableBooks() { return library.getAllUnavailableBooks(); }
 
+    /*
+     * Get all late books
+     */
+    @RequestMapping(value="/group/lateBooks", method=RequestMethod.GET)
     public Iterator<Book> getAllLateBooks() {
         return library.getAllLateBooks();
     }
 
-    // try to get a book out for 2 week period
-    public void requestBook(int bookId) throws BookIsOutException {
-        library.requestBook(bookId);
+    /*
+     * Gets the status of a book
+     */
+    @RequestMapping(value="/reservation/status/{bookId}", method=RequestMethod.GET)
+    public String isOut(@PathVariable("bookId") int bookId) {
+        if (library.isOut(bookId)) return "Out";
+        return "In";
     }
 
-    public boolean isOut(int bookId) {
-        return library.isOut(bookId);
-    }
-
-   public void returnBook(int reservationId) {
+    /*
+     * Return a book with reservationId
+     */
+    @RequestMapping(value="/reservation/{reservationId}", method=RequestMethod.DELETE)
+    public String returnBook(@PathVariable("reservationId") int reservationId) {
         library.returnBook(reservationId);
-   }
+        return "Book has now been returned";
+    }
 
+    /*
+     * Reserve a book with bookId, returns the reservationId
+     */
+    @RequestMapping(value="/reservation/book/{bookId}", method=RequestMethod.PUT)
+    public int requestBook(@PathVariable("bookId") int bookId) throws BookIsOutException {
+        return library.requestBook(bookId);
+    }
+
+    /*
+     * List all reservations
+     */
+    @RequestMapping(value="/reservation", method=RequestMethod.GET)
+    public Iterator<Reservation> getAllReservations() {
+        return library.getAllReservations();
+    }
 }

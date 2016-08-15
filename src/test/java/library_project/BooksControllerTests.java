@@ -53,7 +53,7 @@ public class BooksControllerTests {
 	@Test
 	public void tryMe() throws Exception {
 
-		this.mockMvc.perform(get("/api/books"))
+		this.mockMvc.perform(get("/api/books/books"))
 				.andDo(print())
 				.andExpect(status().isOk());
 	}

@@ -13,17 +13,26 @@ import java.util.*;
 public class Library {
     private ReservationRepository allReservations;
     private Repository<Book> allBooks;
+
     public Library() {
         allBooks = new FilledRepository();
         allReservations  = new ReservationRepository();
     }
-    public void requestBook(int bookId) throws BookIsOutException {
+
+    public Iterator<Reservation> getAllReservations(){
+        return allReservations.getAll();
+    }
+
+    public int requestBook(int bookId) throws BookIsOutException {
+        Reservation newReservation = new Reservation(bookId);
         // check that the book is *not* out
         if (!isOut(bookId)) {
-            allReservations.add(new Reservation(bookId));
+            allReservations.add(newReservation);
         } else {
             throw new BookIsOutException();
         }
+
+        return newReservation.getReservationId();
     }
 
     public void returnBook(int reservationId) {
@@ -81,7 +90,7 @@ public class Library {
     }
 
     /*
-    Finds all reservations related to bookId
+     * Finds all reservations related to bookId
      */
     private Iterator<Reservation> findReservations(int bookId) {
         Repository<Reservation> foundReservations = new ReservationRepository();
