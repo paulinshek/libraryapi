@@ -5,7 +5,7 @@ import library_project.models.Book;
 /**
  * Created by pshek on 12/08/2016.
  */
-public class ReservationsController {
+public class LibraryController {
 
     public Iterable<Book> getAllAvailableBooks(){
         return null;
