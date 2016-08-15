@@ -13,15 +13,14 @@ import java.util.*;
 public class Library {
     private ReservationRepository allReservations;
     private Repository<Book> allBooks;
-
     public Library() {
         allBooks = new FilledRepository();
         allReservations  = new ReservationRepository();
     }
-    public void takeBookOut(Reservation reservation) throws BookIsOutException {
-        // check that the book is not out
-        if (findReservations(reservation.getBookId()).size() == 0) {
-            allReservations.add(reservation);
+    public void requestBook(int bookId) throws BookIsOutException {
+        // check that the book is *not* out
+        if (!isOut(bookId)) {
+            allReservations.add(new Reservation(bookId));
         } else {
             throw new BookIsOutException();
         }
@@ -31,7 +30,7 @@ public class Library {
         allReservations.remove(reservationId);
     }
 
-    public Repository<Book> getAllAvailableBooks(){
+    public Iterator<Book> getAllAvailableBooks(){
         Iterator<Reservation> allResIt = allReservations.getAll();
         Repository<Book> availableBooks = new BookRepository();
         Reservation currRes = null;
@@ -46,10 +45,10 @@ public class Library {
             }
         }
 
-        return availableBooks;
+        return availableBooks.getAll();
     }
 
-    public Repository<Book> getAllUnavailableBooks() {
+    public Iterator<Book> getAllUnavailableBooks() {
         Iterator<Reservation> allResIt = allReservations.getAll();
         Repository<Book> unavailableBooks  = new BookRepository();
         Reservation currRes = null;
@@ -62,10 +61,10 @@ public class Library {
             }
         }
 
-        return unavailableBooks;
+        return unavailableBooks.getAll();
     }
 
-    public Repository<Book> getAllLateBooks() {
+    public Iterator<Book> getAllLateBooks() {
         Iterator<Reservation> allResIt = allReservations.getAll();
         Repository<Book> lateBooks  = new BookRepository();
         Reservation currRes = null;
@@ -78,13 +77,13 @@ public class Library {
             }
         }
 
-        return lateBooks;
+        return lateBooks.getAll();
     }
 
     /*
     Finds all reservations related to bookId
      */
-    private Repository<Reservation> findReservations(int bookId) {
+    private Iterator<Reservation> findReservations(int bookId) {
         Repository<Reservation> foundReservations = new ReservationRepository();
         Iterator<Reservation> reservationIterator = allReservations.getAll();
         Reservation currReservation = null;
@@ -98,6 +97,16 @@ public class Library {
             }
         }
 
-        return foundReservations;
+        return foundReservations.getAll();
+    }
+
+    public boolean isOut(int bookId) {
+        Iterator<Reservation> relevantReservations = findReservations(bookId);
+        boolean isOut = false;
+
+        while (relevantReservations.hasNext() & !isOut){
+            isOut = relevantReservations.next().isOut();
+        }
+        return isOut;
     }
 }
