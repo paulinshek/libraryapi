@@ -37,6 +37,10 @@ public class Reservation {
         return reservationId;
     }
 
+    public boolean isOut() {
+        return out;
+    }
+
     public int getBookId() {
         return bookId;
     }
