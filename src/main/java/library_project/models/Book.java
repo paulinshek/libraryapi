@@ -15,6 +15,10 @@ public class Book {
         this.publishDate = publishDate;
     }
 
+    public Book() {
+
+    }
+
     public int getId() {
         return id;
     }
