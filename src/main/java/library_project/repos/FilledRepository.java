@@ -19,7 +19,7 @@ public class FilledRepository implements Repository<Book> {
     }
 
     @Override
-    public Book get(int id) throws NoEntityException {
+    public Book get(int id) {
         return bookRepo.get(id);
     }
 
@@ -34,7 +34,7 @@ public class FilledRepository implements Repository<Book> {
     }
 
     @Override
-    public void remove(int id) throws NoEntityException {
+    public void remove(int id) {
         bookRepo.remove(id);
     }
 }

@@ -2,9 +2,7 @@ package library_project.controllers;
 
 import java.util.Iterator;
 
-import library_project.repos.BookRepository;
 import library_project.repos.FilledRepository;
-import library_project.repos.NoEntityException;
 import library_project.repos.Repository;
 import library_project.models.Book;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +24,7 @@ public class BooksController {
     }
 
     @RequestMapping(value="/values/{id}",method=RequestMethod.GET)
-    public Book get(@PathVariable("id") int id) throws NoEntityException {
+    public Book get(@PathVariable("id") int id) {
         return bookRepo.get(id);
     }
 
@@ -37,7 +35,7 @@ public class BooksController {
     }
 
     @RequestMapping(value="/values/{id}",method=RequestMethod.DELETE)
-    public void delete(@PathVariable("id") int id) throws NoEntityException {
+    public void delete(@PathVariable("id") int id) {
         bookRepo.remove(id);
     }
 

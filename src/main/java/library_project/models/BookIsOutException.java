@@ -1,4 +1,4 @@
-package library_project.repos;
+package library_project.models;
 
 /**
  * Created by pshek on 15/08/2016.
