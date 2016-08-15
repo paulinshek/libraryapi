@@ -16,7 +16,7 @@ public class ReservationRepository implements Repository<Reservation> {
     }
 
     @Override
-    public Reservation get(int reservationId) {
+    public synchronized Reservation get(int reservationId) {
         Iterator<Reservation> resIt = allReservations.iterator();
         boolean found = false;
         Reservation currRes = null;
@@ -30,18 +30,18 @@ public class ReservationRepository implements Repository<Reservation> {
     }
 
     @Override
-    public Iterator<Reservation> getAll() {
+    public synchronized Iterator<Reservation> getAll() {
         return allReservations.iterator();
     }
 
     @Override
     // TODO: reservation id must be unique
-    public void add(Reservation reservation) {
+    public synchronized void add(Reservation reservation) {
         allReservations.add(reservation);
     }
 
     @Override
-    public void remove(int reservationId) {
+    public synchronized void remove(int reservationId) {
         allReservations.remove(get(reservationId));
     }
 
