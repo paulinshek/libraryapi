@@ -36,7 +36,6 @@ public class BookRepository implements Repository<Book> {
     }
 
     @Override
-    // TODO: Book id must be unique
     public void add(Book book) {
         book.setId(bookRepository.size());
         bookRepository.add(book);
