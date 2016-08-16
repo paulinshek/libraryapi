@@ -9,18 +9,21 @@ import java.util.Properties;
 /**
  * Created by pshek on 16/08/2016.
  */
-public class BookIteratorDatabase implements Iterator<Book> {
+public class DatabaseIterator<E> implements Iterator<E> {
     Properties connectionProps;
     Connection conn;
     ResultSet rs;
     Statement stmt;
     boolean currRowHasBeenRead;
     boolean hasNext;
+    RowParser<E> rowParser;
 
-    public BookIteratorDatabase(String dburl, Properties connectionProps, String queryString) {
+    public DatabaseIterator(String dburl, Properties connectionProps, String queryString, RowParser<E> rowParser) {
         conn = null;
         stmt = null;
         rs = null;
+
+        this.rowParser = rowParser;
 
         try {
             conn = DriverManager.getConnection(dburl, connectionProps);
@@ -71,17 +74,18 @@ public class BookIteratorDatabase implements Iterator<Book> {
     }
 
     @Override
-    public Book next() {
+    public E next() {
         try {
             if (currRowHasBeenRead){
                 hasNext = rs.next();
             }
             currRowHasBeenRead = true;
-            return new Book(rs.getInt("id"),
-                    rs.getString("isbn"),
-                    rs.getString("title"),
-                    rs.getString("author"),
-                    rs.getString("publishDate"));
+            return rowParser.parse(rs);
+//            new Book(rs.getInt("id"),
+//                    rs.getString("isbn"),
+//                    rs.getString("title"),
+//                    rs.getString("author"),
+//                    rs.getString("publishDate"));
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
