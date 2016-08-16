@@ -25,7 +25,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
 
     @Override
     public Reservation get(int id) {
-        DatabaseIterator<Reservation> resIterator = new DatabaseIterator(dburl,
+        DatabaseIterator<Reservation> resIterator = new DatabaseIterator<Reservation>(dburl,
                 connectionProps,
                 "SELECT * FROM reservations WHERE id =" + id,
                 ReservationParser.INSTANCE);
@@ -39,7 +39,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
 
     @Override
     public Iterator<Reservation> getAll() {
-        return new DatabaseIterator(dburl,
+        return new DatabaseIterator<Reservation>(dburl,
                 connectionProps,
                 "SELECT * FROM reservations",
                 ReservationParser.INSTANCE);
@@ -55,11 +55,11 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
 
             pstmt = conn.prepareStatement("INSERT INTO reservations " +
                     "VALUES (?, ?, ?, ?, ?)");
-            pstmt.setInt(1, reservation.getReservationId());
+            pstmt.setInt(1, reservation.getId());
             pstmt.setInt(2, reservation.getBookId());
             pstmt.setString(3, reservation.getStartDate());
             pstmt.setString(4, reservation.getEndDate());
-            pstmt.setBoolean(5, reservation.isOut());
+            pstmt.setBoolean(5, reservation.getOut());
 
             pstmt.executeUpdate();
 

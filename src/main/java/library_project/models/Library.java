@@ -26,7 +26,7 @@ public class Library {
         if (!isOut(bookId)) {
             newReservation = new Reservation(bookId);
             allReservations.add(newReservation);
-            return newReservation.getReservationId();
+            return newReservation.getId();
         } else {
             throw new BookIsOutException();
         }
@@ -46,7 +46,7 @@ public class Library {
 
         while(allResIt.hasNext()){
             currRes = allResIt.next();
-            if (currRes.isOut()){
+            if (currRes.getOut()){
                 availableBooks.remove(currRes.getBookId()); // if book is out, then remove from return object
             }
         }
@@ -61,7 +61,7 @@ public class Library {
 
         while (allResIt.hasNext()) {
             currRes = allResIt.next();
-            if (currRes.isOut()) { // if reservation is active then book is unavailable
+            if (currRes.getOut()) { // if reservation is active then book is unavailable
                 Book outBook = allBooks.get(currRes.getBookId());
                 unavailableBooks.add(outBook);
             }
@@ -98,7 +98,7 @@ public class Library {
         while (reservationIterator.hasNext()){
             currReservation = reservationIterator.next();
             // does the book id match? if so, then add to found reservations
-            if (currReservation.getReservationId() == bookId){
+            if (currReservation.getId() == bookId){
                 foundReservations.add(currReservation);
             }
         }
@@ -111,7 +111,7 @@ public class Library {
         boolean isOut = false;
 
         while (relevantReservations.hasNext() & !isOut){
-            isOut = relevantReservations.next().isOut();
+            isOut = relevantReservations.next().getOut();
         }
         return isOut;
     }

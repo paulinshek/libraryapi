@@ -1,9 +1,11 @@
 package library_project.models;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 
 /**
  * Created by pshek on 12/08/2016.
@@ -11,18 +13,19 @@ import java.util.GregorianCalendar;
 public class Reservation {
     private int reservationId;
     private int bookId;
-    private Calendar startDate;
-    private Calendar endDate;
+
+    private DateTimeFormatter dateFormatter;
+    private String startDate;
+    private String endDate;
+
     private boolean out;
     private static int COUNT;
-    private SimpleDateFormat dateFormat;
 
     public Reservation(int bookId) {
-        dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-        startDate = Calendar.getInstance();
+        dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        endDate = Calendar.getInstance();
-        endDate.add(Calendar.DAY_OF_YEAR, 14);
+        startDate = LocalDate.now().format(dateFormatter);
+        endDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
 
         this.reservationId = COUNT;
         COUNT++;
@@ -33,7 +36,7 @@ public class Reservation {
 
     public Reservation(int reservationId, int bookId, String startDate, String endDate, boolean out) {
         this.bookId = bookId;
-        setReservationId(reservationId);
+        setId(reservationId);
         setStartDate(startDate);
         setEndDate(endDate);
         setOut(out);
@@ -44,14 +47,15 @@ public class Reservation {
     }
 
     public boolean isLate() {
-        return Calendar.getInstance().compareTo(endDate) > 0;
+        LocalDate today = LocalDate.now();
+        return today.isAfter(LocalDate.parse(endDate, dateFormatter));
     }
 
-    public int getReservationId() {
+    public int getId() {
         return reservationId;
     }
 
-    public boolean isOut() {
+    public boolean getOut() {
         return out;
     }
 
@@ -60,38 +64,26 @@ public class Reservation {
     }
 
     public String getStartDate() {
-        return dateFormat.format(startDate.getTime());
+        return startDate;
     }
 
     public String getEndDate() {
-        return dateFormat.format(endDate.getTime());
+        return endDate;
     }
 
     public void setStartDate(String startDate) {
-        this.startDate = Calendar.getInstance();
-
-        try{
-            this.startDate.setTime(dateFormat.parse(startDate));
-        } catch (Exception e) {
-            System.out.println("Failed to parse start date");
-        }
+        this.startDate = startDate;
     }
 
     public void setEndDate(String endDate) {
-        this.endDate = Calendar.getInstance();
-
-        try{
-            this.endDate.setTime(dateFormat.parse(endDate));
-        } catch (Exception e) {
-            System.out.println("Failed to parse end date");
-        }
+        this.endDate = endDate;
     }
 
     public void setOut(boolean out) {
         this.out = out;
     }
 
-    public void setReservationId(int reservationId) {
+    public void setId(int reservationId) {
         this.reservationId = reservationId;
     }
 }

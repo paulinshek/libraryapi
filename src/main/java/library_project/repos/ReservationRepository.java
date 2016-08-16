@@ -23,7 +23,7 @@ public class ReservationRepository implements Repository<Reservation> {
 
         while (resIt.hasNext() & !found){
             currRes = resIt.next();
-            found = currRes.getReservationId() == reservationId;
+            found = currRes.getId() == reservationId;
         }
 
         return currRes;
