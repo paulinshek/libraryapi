@@ -1,7 +1,9 @@
 package library_project.models;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by pshek on 12/08/2016.
@@ -25,6 +27,21 @@ public class Reservation {
         this.bookId = bookId;
 
         out = true;
+    }
+
+    public Reservation(int reservationId, int bookId, String startDate, String endDate, boolean out) {
+        this.reservationId = reservationId;
+        this.bookId = bookId;
+
+        this.startDate = Calendar.getInstance();
+        this.endDate = Calendar.getInstance();
+
+        try{
+            this.startDate.setTime(new SimpleDateFormat("dd-MMM-yyyy").parse(startDate));
+            this.endDate.setTime(new SimpleDateFormat("dd-MMM-yyyy").parse(endDate));
+        } catch (Exception e) {}
+
+        this.out = out;
     }
 
     public void returnBook() {
