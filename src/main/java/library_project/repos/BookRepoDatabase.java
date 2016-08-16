@@ -22,7 +22,7 @@ public class BookRepoDatabase implements Repository<Book> {
 
     @Override
     public Book get(int id) {
-        DatabaseIterator<Book> bookIterator = new DatabaseIterator(dburl,
+        DatabaseIterator<Book> bookIterator = new DatabaseIterator<Book>(dburl,
                 connectionProps,
                 "SELECT * FROM books WHERE id =" + id,
                 BookParser.INSTANCE);
@@ -36,7 +36,7 @@ public class BookRepoDatabase implements Repository<Book> {
 
     @Override
     public Iterator<Book> getAll() {
-        return new DatabaseIterator(dburl,
+        return new DatabaseIterator<Book>(dburl,
                 connectionProps,
                 "SELECT * FROM books",
                 BookParser.INSTANCE);
