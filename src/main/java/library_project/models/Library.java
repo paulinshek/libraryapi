@@ -1,9 +1,6 @@
 package library_project.models;
 
-import library_project.repos.BookRepository;
-import library_project.repos.FilledRepository;
-import library_project.repos.Repository;
-import library_project.repos.ReservationRepository;
+import library_project.repos.*;
 
 import java.util.*;
 
@@ -11,12 +8,12 @@ import java.util.*;
  * Created by pshek on 15/08/2016.
  */
 public class Library {
-    private ReservationRepository allReservations;
+    private Repository<Reservation> allReservations;
     private Repository<Book> allBooks;
 
-    public Library() {
-        allBooks = new FilledRepository();
-        allReservations  = new ReservationRepository();
+    public Library(Repository<Book> allBooks, Repository<Reservation> allReservations) {
+        this.allBooks = allBooks;
+        this.allReservations = allReservations;
     }
 
     public Iterator<Reservation> getAllReservations(){
@@ -24,15 +21,15 @@ public class Library {
     }
 
     public int requestBook(int bookId) throws BookIsOutException {
-        Reservation newReservation = new Reservation(bookId);
+        Reservation newReservation = null;
         // check that the book is *not* out
         if (!isOut(bookId)) {
+            newReservation = new Reservation(bookId);
             allReservations.add(newReservation);
+            return newReservation.getReservationId();
         } else {
             throw new BookIsOutException();
         }
-
-        return newReservation.getReservationId();
     }
 
     public void returnBook(int reservationId) {

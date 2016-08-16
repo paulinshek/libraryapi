@@ -4,10 +4,13 @@ import library_project.models.Book;
 import library_project.models.BookIsOutException;
 import library_project.models.Library;
 import library_project.models.Reservation;
+import library_project.repos.BookRepoDatabase;
+import library_project.repos.ReservationRepoDatabase;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.Iterator;
+import java.util.Properties;
 
 /**
  * Created by pshek on 12/08/2016.
@@ -18,7 +21,14 @@ public class LibraryController {
     private Library library;
 
     public LibraryController() {
-        library = new Library();
+        String dbUrl = "jdbc:mysql://localhost:3306/test_schema";
+
+        Properties connectionProps =  new Properties();
+        connectionProps.put("user", "root");
+        connectionProps.put("password", "1234");
+
+        library = new Library(new BookRepoDatabase(dbUrl, connectionProps),
+                new ReservationRepoDatabase(dbUrl, connectionProps));
     }
 
     /*
@@ -64,7 +74,7 @@ public class LibraryController {
     /*
      * Reserve a book with bookId, returns the reservationId
      */
-    @RequestMapping(value="/reservations/book/{bookId}", method=RequestMethod.PUT)
+    @RequestMapping(value="/reservations/book/{bookId}", method=RequestMethod.POST)
     public int requestBook(@PathVariable("bookId") int bookId) throws BookIsOutException {
         return library.requestBook(bookId);
     }
