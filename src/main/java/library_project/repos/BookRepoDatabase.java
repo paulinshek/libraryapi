@@ -1,10 +1,9 @@
 package library_project.repos;
 
+import library_project.databasetools.BookParser;
+import library_project.databasetools.DatabaseIterator;
 import library_project.models.Book;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.Iterator;
 import java.util.Properties;
@@ -16,17 +15,17 @@ public class BookRepoDatabase implements Repository<Book> {
     private String dburl;
     private Properties connectionProps;
 
-    public BookRepoDatabase() {
-        dburl = "jdbc:mysql://localhost:3306/test_schema";
-
-        connectionProps =  new Properties();
-        connectionProps.put("user", "root");
-        connectionProps.put("password", "1234");
+    public BookRepoDatabase(String dburl, Properties connectionProps) {
+        this.dburl = dburl;
+        this.connectionProps = connectionProps;
     }
 
     @Override
     public Book get(int id) {
-        BookIteratorDatabase bookIterator = new BookIteratorDatabase(dburl, connectionProps, "SELECT * FROM books WHERE id =" + id);
+        DatabaseIterator<Book> bookIterator = new DatabaseIterator(dburl,
+                connectionProps,
+                "SELECT * FROM books WHERE id =" + id,
+                BookParser.INSTANCE);
         Book res = null;
         if (bookIterator.hasNext()){
             res = bookIterator.next();
@@ -37,7 +36,10 @@ public class BookRepoDatabase implements Repository<Book> {
 
     @Override
     public Iterator<Book> getAll() {
-        return new BookIteratorDatabase(dburl, connectionProps, "SELECT * FROM books");
+        return new DatabaseIterator(dburl,
+                connectionProps,
+                "SELECT * FROM books",
+                BookParser.INSTANCE);
     }
 
     @Override

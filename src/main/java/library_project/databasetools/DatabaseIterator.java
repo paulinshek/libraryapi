@@ -1,4 +1,4 @@
-package library_project.repos;
+package library_project.databasetools;
 
 import library_project.models.Book;
 
@@ -81,11 +81,6 @@ public class DatabaseIterator<E> implements Iterator<E> {
             }
             currRowHasBeenRead = true;
             return rowParser.parse(rs);
-//            new Book(rs.getInt("id"),
-//                    rs.getString("isbn"),
-//                    rs.getString("title"),
-//                    rs.getString("author"),
-//                    rs.getString("publishDate"));
         } catch (SQLException ex) {
             // handle any errors
             System.out.println("SQLException: " + ex.getMessage());
