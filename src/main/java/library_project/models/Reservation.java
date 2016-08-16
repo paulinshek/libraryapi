@@ -32,20 +32,11 @@ public class Reservation {
     }
 
     public Reservation(int reservationId, int bookId, String startDate, String endDate, boolean out) {
-        this.reservationId = reservationId;
         this.bookId = bookId;
-
-        this.startDate = Calendar.getInstance();
-        this.endDate = Calendar.getInstance();
-
-        try{
-            this.startDate.setTime(dateFormat.parse(startDate));
-            this.endDate.setTime(dateFormat.parse(endDate));
-        } catch (Exception e) {
-            System.out.println("Failed to parse start or end date");
-        }
-
-        this.out = out;
+        setReservationId(reservationId);
+        setStartDate(startDate);
+        setEndDate(endDate);
+        setOut(out);
     }
 
     public void returnBook() {
@@ -74,5 +65,33 @@ public class Reservation {
 
     public String getEndDate() {
         return dateFormat.format(endDate.getTime());
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = Calendar.getInstance();
+
+        try{
+            this.startDate.setTime(dateFormat.parse(startDate));
+        } catch (Exception e) {
+            System.out.println("Failed to parse start date");
+        }
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = Calendar.getInstance();
+
+        try{
+            this.endDate.setTime(dateFormat.parse(endDate));
+        } catch (Exception e) {
+            System.out.println("Failed to parse end date");
+        }
+    }
+
+    public void setOut(boolean out) {
+        this.out = out;
+    }
+
+    public void setReservationId(int reservationId) {
+        this.reservationId = reservationId;
     }
 }
