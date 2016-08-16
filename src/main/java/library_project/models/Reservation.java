@@ -15,8 +15,10 @@ public class Reservation {
     private Calendar endDate;
     private boolean out;
     private static int COUNT;
+    private SimpleDateFormat dateFormat;
 
     public Reservation(int bookId) {
+        dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
         startDate = Calendar.getInstance();
 
         endDate = Calendar.getInstance();
@@ -37,9 +39,11 @@ public class Reservation {
         this.endDate = Calendar.getInstance();
 
         try{
-            this.startDate.setTime(new SimpleDateFormat("dd-MMM-yyyy").parse(startDate));
-            this.endDate.setTime(new SimpleDateFormat("dd-MMM-yyyy").parse(endDate));
-        } catch (Exception e) {}
+            this.startDate.setTime(dateFormat.parse(startDate));
+            this.endDate.setTime(dateFormat.parse(endDate));
+        } catch (Exception e) {
+            System.out.println("Failed to parse start or end date");
+        }
 
         this.out = out;
     }
@@ -62,5 +66,13 @@ public class Reservation {
 
     public int getBookId() {
         return bookId;
+    }
+
+    public String getStartDate() {
+        return dateFormat.format(startDate.getTime());
+    }
+
+    public String getEndDate() {
+        return dateFormat.format(endDate.getTime());
     }
 }
