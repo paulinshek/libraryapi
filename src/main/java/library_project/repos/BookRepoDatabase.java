@@ -50,7 +50,7 @@ public class BookRepoDatabase implements Repository<Book> {
         try {
             conn = DriverManager.getConnection(dburl, connectionProps);
 
-            pstmt = conn.prepareStatement("INSERT INTO books (id, isbn, title, author, publishDate)" +
+            pstmt = conn.prepareStatement("INSERT INTO books (id, isbn, title, author, publishDate) " +
                     "VALUES (?, ?, ?, ?, ?)");
             pstmt.setInt(1, book.getId());
             pstmt.setString(2, book.getIsbn());

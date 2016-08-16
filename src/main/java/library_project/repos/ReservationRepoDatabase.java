@@ -53,7 +53,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
         try {
             conn = DriverManager.getConnection(dburl, connectionProps);
 
-            pstmt = conn.prepareStatement("INSERT INTO reservations (id, bookid, startDate, endDate, out)" +
+            pstmt = conn.prepareStatement("INSERT INTO reservations " +
                     "VALUES (?, ?, ?, ?, ?)");
             pstmt.setInt(1, reservation.getReservationId());
             pstmt.setInt(2, reservation.getBookId());
