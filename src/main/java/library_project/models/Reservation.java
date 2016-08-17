@@ -37,6 +37,7 @@ public class Reservation {
     public Reservation(int reservationId, int bookId, String startDate, String endDate, boolean out) {
         this.bookId = bookId;
         setId(reservationId);
+        compareCount(reservationId);
         setStartDate(startDate);
         setEndDate(endDate);
         setOut(out);
@@ -49,6 +50,16 @@ public class Reservation {
 
     private synchronized static void incrementCount() {
         count++;
+    }
+
+    /*
+     * Makes the count variable the biggest id number (so not a real count anymore)
+     * to enforce unique ids
+     */
+    private synchronized static void compareCount(int newId) {
+        if (count < newId) {
+            count = newId + 1;
+        }
     }
 
     public boolean isLate() {
