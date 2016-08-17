@@ -68,9 +68,8 @@ public class Reservation {
     }
 
     public boolean isLate() {
-        //LocalDate today = LocalDate.now();
-        //return (today.isAfter(LocalDate.parse(endDate, dateFormatter)));
-        return false;
+        LocalDate today = LocalDate.now();
+        return (today.isAfter(LocalDate.parse(endDate, dateFormatter)));
     }
 
     public int getId() {
