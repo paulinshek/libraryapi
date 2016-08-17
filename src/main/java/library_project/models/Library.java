@@ -22,14 +22,15 @@ public class Library {
 
     public int requestBook(int bookId) throws BookIsOutException {
         Reservation newReservation = null;
-        // check that the book is *not* out
-        if (!isOut(bookId)) {
-            newReservation = new Reservation(bookId);
-            allReservations.add(newReservation);
-            return newReservation.getId();
-        } else {
-            throw new BookIsOutException();
+        synchronized (this) {
+            // check that the book is *not* out
+            if (!isOut(bookId)) {
+                newReservation = new Reservation(bookId);
+                allReservations.add(newReservation);
+                return newReservation.getId();
+            }
         }
+        throw new BookIsOutException();
     }
 
     public void returnBook(int reservationId) {
