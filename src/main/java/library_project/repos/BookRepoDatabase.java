@@ -12,18 +12,10 @@ import java.util.Properties;
  * Implement book repository but with a database backend
  */
 public class BookRepoDatabase implements Repository<Book> {
-    private String dburl;
-    private Properties connectionProps;
-
-    public BookRepoDatabase(String dburl, Properties connectionProps) {
-        this.dburl = dburl;
-        this.connectionProps = connectionProps;
-    }
 
     @Override
     public Book get(int id) {
-        DatabaseIterator<Book> bookIterator = new DatabaseIterator<Book>(dburl,
-                connectionProps,
+        DatabaseIterator<Book> bookIterator = new DatabaseIterator<Book>(
                 "SELECT * FROM books WHERE id =" + id,
                 BookParser.INSTANCE);
         Book res = null;
@@ -36,8 +28,7 @@ public class BookRepoDatabase implements Repository<Book> {
 
     @Override
     public Iterator<Book> getAll() {
-        return new DatabaseIterator<Book>(dburl,
-                connectionProps,
+        return new DatabaseIterator<Book>(
                 "SELECT * FROM books",
                 BookParser.INSTANCE);
     }
@@ -48,7 +39,7 @@ public class BookRepoDatabase implements Repository<Book> {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DriverManager.getConnection(dburl, connectionProps);
+            conn = getConnection();
 
             pstmt = conn.prepareStatement("INSERT INTO books (id, isbn, title, author, publishDate) " +
                     "VALUES (?, ?, ?, ?, ?)");

@@ -18,15 +18,10 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
     private String dburl;
     private Properties connectionProps;
 
-    public ReservationRepoDatabase(String dburl, Properties connectionProps) {
-        this.dburl = dburl;
-        this.connectionProps = connectionProps;
-    }
 
     @Override
     public Reservation get(int id) {
-        DatabaseIterator<Reservation> resIterator = new DatabaseIterator<Reservation>(dburl,
-                connectionProps,
+        DatabaseIterator<Reservation> resIterator = new DatabaseIterator<Reservation>(
                 "SELECT * FROM reservations WHERE id =" + id,
                 ReservationParser.INSTANCE);
         Reservation res = null;
@@ -39,8 +34,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
 
     @Override
     public Iterator<Reservation> getAll() {
-        return new DatabaseIterator<Reservation>(dburl,
-                connectionProps,
+        return new DatabaseIterator<Reservation>(
                 "SELECT * FROM reservations",
                 ReservationParser.INSTANCE);
     }

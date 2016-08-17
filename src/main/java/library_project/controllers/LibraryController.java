@@ -21,14 +21,8 @@ public class LibraryController {
     private Library library;
 
     public LibraryController() {
-        String dburl = "jdbc:mysql://localhost:3306/test_schema";
-
-        Properties connectionProps =  new Properties();
-        connectionProps.put("user", "root");
-        connectionProps.put("password", "1234");
-
-        library = new Library(new BookRepoDatabase(dburl, connectionProps),
-                new ReservationRepoDatabase(dburl, connectionProps));
+        library = new Library(new BookRepoDatabase(),
+                new ReservationRepoDatabase());
     }
 
     /*
