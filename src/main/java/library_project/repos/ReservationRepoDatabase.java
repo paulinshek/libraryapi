@@ -1,8 +1,11 @@
 package library_project.repos;
 
+import library_project.databasetools.DatabaseConnector;
 import library_project.databasetools.DatabaseIterator;
 import library_project.databasetools.ReservationParser;
 import library_project.models.Reservation;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,8 +20,14 @@ import java.util.Properties;
 public class ReservationRepoDatabase implements Repository<Reservation> {
     private String dburl;
     private Properties connectionProps;
+    private DatabaseConnector databaseConnector;
 
+    public ReservationRepoDatabase() {
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("Beans.xml");
 
+        databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
+    }
     @Override
     public Reservation get(int id) {
         DatabaseIterator<Reservation> resIterator = new DatabaseIterator<Reservation>(

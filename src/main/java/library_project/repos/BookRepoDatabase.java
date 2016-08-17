@@ -1,8 +1,11 @@
 package library_project.repos;
 
 import library_project.databasetools.BookParser;
+import library_project.databasetools.DatabaseConnector;
 import library_project.databasetools.DatabaseIterator;
 import library_project.models.Book;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.*;
 import java.util.Iterator;
@@ -12,10 +15,18 @@ import java.util.Properties;
  * Implement book repository but with a database backend
  */
 public class BookRepoDatabase implements Repository<Book> {
+    private DatabaseConnector databaseConnector;
+
+    public BookRepoDatabase() {
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("Beans.xml");
+
+        databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
+    }
 
     @Override
     public Book get(int id) {
-        DatabaseIterator<Book> bookIterator = new DatabaseIterator<Book>(
+        DatabaseIterator<Book> bookIterator = new DatabaseIterator<Book>(databaseConnector,
                 "SELECT * FROM books WHERE id =" + id,
                 BookParser.INSTANCE);
         Book res = null;
@@ -28,7 +39,7 @@ public class BookRepoDatabase implements Repository<Book> {
 
     @Override
     public Iterator<Book> getAll() {
-        return new DatabaseIterator<Book>(
+        return new DatabaseIterator<Book>(databaseConnector,
                 "SELECT * FROM books",
                 BookParser.INSTANCE);
     }
@@ -39,7 +50,7 @@ public class BookRepoDatabase implements Repository<Book> {
         PreparedStatement pstmt = null;
 
         try {
-            conn = getConnection();
+            conn = databaseConnector.getConnection();
 
             pstmt = conn.prepareStatement("INSERT INTO books (id, isbn, title, author, publishDate) " +
                     "VALUES (?, ?, ?, ?, ?)");
@@ -63,7 +74,7 @@ public class BookRepoDatabase implements Repository<Book> {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DriverManager.getConnection(dburl, connectionProps);
+            conn = databaseConnector.getConnection();
 
             pstmt = conn.prepareStatement("DELETE FROM books WHERE id = " + id);
             pstmt.executeUpdate();

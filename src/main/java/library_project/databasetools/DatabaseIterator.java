@@ -10,8 +10,6 @@ import java.util.Properties;
  * Created by pshek on 16/08/2016.
  */
 public class DatabaseIterator<E> implements Iterator<E> {
-    String dburl;
-    Properties connectionProps;
     Connection conn;
     ResultSet rs;
     Statement stmt;
@@ -19,7 +17,7 @@ public class DatabaseIterator<E> implements Iterator<E> {
     boolean hasNext;
     RowParser<E> rowParser;
 
-    public DatabaseIterator(String queryString, RowParser<E> rowParser) {
+    public DatabaseIterator(DatabaseConnector databaseConnector, String queryString, RowParser<E> rowParser) {
         conn = null;
         stmt = null;
         rs = null;
@@ -27,7 +25,7 @@ public class DatabaseIterator<E> implements Iterator<E> {
         this.rowParser = rowParser;
 
         try {
-            conn = DriverManager.getConnection(dburl, connectionProps);
+            conn = databaseConnector.getConnection();
 
             stmt = conn.createStatement();
             rs = stmt.executeQuery(queryString);
@@ -39,13 +37,6 @@ public class DatabaseIterator<E> implements Iterator<E> {
         }
     }
 
-    public void setupDatabase(){
-        dburl = "jdbc:mysql://localhost:3306/test_schema";
-
-        connectionProps =  new Properties();
-        connectionProps.put("user", "root");
-        connectionProps.put("password", "1234");
-    }
     public void close() {
         if (rs != null) {
             try {
