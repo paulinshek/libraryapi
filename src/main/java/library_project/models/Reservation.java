@@ -28,7 +28,7 @@ public class Reservation {
         endDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
 
         this.reservationId = count;
-        count++;
+        incrementCount();
         this.bookId = bookId;
 
         out = true;
@@ -40,13 +40,14 @@ public class Reservation {
         setStartDate(startDate);
         setEndDate(endDate);
         setOut(out);
+
     }
 
     public void returnBook() {
         out = false;
     }
 
-    private static void incrementCount() {
+    private synchronized static void incrementCount() {
         count++;
     }
 
