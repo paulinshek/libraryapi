@@ -46,6 +46,10 @@ public class Reservation {
         out = false;
     }
 
+    private static void incrementCount() {
+        count++;
+    }
+
     public boolean isLate() {
         //LocalDate today = LocalDate.now();
         //return (today.isAfter(LocalDate.parse(endDate, dateFormatter)));
