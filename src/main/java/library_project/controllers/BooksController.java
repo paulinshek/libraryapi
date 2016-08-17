@@ -16,13 +16,7 @@ public class BooksController {
 
     public BooksController()
     {
-        String dbUrl = "jdbc:mysql://localhost:3306/test_schema";
-
-        Properties connectionProps =  new Properties();
-        connectionProps.put("user", "root");
-        connectionProps.put("password", "1234");
-
-        bookRepo = new BookRepoDatabase(dbUrl, connectionProps);
+        bookRepo = new BookRepoDatabase();
     }
 
     @RequestMapping(value="/books",method=RequestMethod.GET)

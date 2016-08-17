@@ -18,8 +18,6 @@ import java.util.Properties;
  * Created by pshek on 16/08/2016.
  */
 public class ReservationRepoDatabase implements Repository<Reservation> {
-    private String dburl;
-    private Properties connectionProps;
     private DatabaseConnector databaseConnector;
 
     public ReservationRepoDatabase() {
@@ -31,6 +29,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
     @Override
     public Reservation get(int id) {
         DatabaseIterator<Reservation> resIterator = new DatabaseIterator<Reservation>(
+                databaseConnector,
                 "SELECT * FROM reservations WHERE id =" + id,
                 ReservationParser.INSTANCE);
         Reservation res = null;
@@ -44,6 +43,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
     @Override
     public Iterator<Reservation> getAll() {
         return new DatabaseIterator<Reservation>(
+                databaseConnector,
                 "SELECT * FROM reservations",
                 ReservationParser.INSTANCE);
     }
@@ -54,7 +54,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DriverManager.getConnection(dburl, connectionProps);
+            conn = databaseConnector.getConnection();
 
             pstmt = conn.prepareStatement("INSERT INTO reservations " +
                     "VALUES (?, ?, ?, ?, ?)");
@@ -78,7 +78,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DriverManager.getConnection(dburl, connectionProps);
+            conn = databaseConnector.getConnection();
 
             pstmt = conn.prepareStatement("DELETE FROM reservations WHERE id = " + id);
             pstmt.executeUpdate();
