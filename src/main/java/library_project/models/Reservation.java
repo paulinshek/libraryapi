@@ -22,7 +22,7 @@ public class Reservation {
     private static int COUNT;
 
     public Reservation(int bookId) {
-        dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
 
         startDate = LocalDate.now().format(dateFormatter);
         endDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
@@ -47,8 +47,9 @@ public class Reservation {
     }
 
     public boolean isLate() {
-        LocalDate today = LocalDate.now();
-        return today.isAfter(LocalDate.parse(endDate, dateFormatter));
+        //LocalDate today = LocalDate.now();
+        //return (today.isAfter(LocalDate.parse(endDate, dateFormatter)));
+        return false;
     }
 
     public int getId() {
