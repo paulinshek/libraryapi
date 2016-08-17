@@ -21,8 +21,12 @@ public class Reservation {
     private boolean out;
     private static int count;
 
-    public Reservation(int bookId) {
+    private Reservation() {
         dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+    }
+
+    public Reservation(int bookId) {
+        this();
 
         startDate = LocalDate.now().format(dateFormatter);
         endDate = LocalDate.now().plusWeeks(2).format(dateFormatter);
@@ -35,6 +39,7 @@ public class Reservation {
     }
 
     public Reservation(int reservationId, int bookId, String startDate, String endDate, boolean out) {
+        this();
         this.bookId = bookId;
         setId(reservationId);
         compareCount(reservationId);
