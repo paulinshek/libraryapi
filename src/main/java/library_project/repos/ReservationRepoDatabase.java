@@ -21,13 +21,9 @@ import java.util.Properties;
 /**
  * Created by pshek on 16/08/2016.
  */
-//@ContextConfiguration("/Beans.xml")
 public class ReservationRepoDatabase implements Repository<Reservation> {
     DatabaseConnector databaseConnector;
-//    public ReservationRepoDatabase(){
-//        ApplicationContext context = new ClassPathXmlApplicationContext("/Beans.xml");
-//        databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
-//    }
+
     public ReservationRepoDatabase(DatabaseConnector databaseConnector){
         this.databaseConnector = databaseConnector;
     }
@@ -54,7 +50,7 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
                 ReservationParser.INSTANCE);
     }
 
-    @Override @Resource
+    @Override
     public void add(Reservation reservation) {
         Connection conn = null;
         PreparedStatement pstmt = null;

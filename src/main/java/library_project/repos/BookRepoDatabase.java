@@ -17,15 +17,8 @@ import java.util.Properties;
 /**
  * Implement book repository but with a database backend
  */
-//@ContextConfiguration("/Beans.xml")
 public class BookRepoDatabase implements Repository<Book> {
-    //@Autowired
     private DatabaseConnector databaseConnector;
-
-//    public BookRepoDatabase(){
-//        ApplicationContext context = new ClassPathXmlApplicationContext("/Beans.xml");
-//        databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
-//    }
 
     public BookRepoDatabase(DatabaseConnector databaseConnector){
         this.databaseConnector = databaseConnector;

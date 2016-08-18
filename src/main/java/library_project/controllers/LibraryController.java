@@ -6,6 +6,7 @@ import library_project.models.BookIsOutException;
 import library_project.models.Library;
 import library_project.models.Reservation;
 import library_project.repos.BookRepoDatabase;
+import library_project.repos.Repository;
 import library_project.repos.ReservationRepoDatabase;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +22,9 @@ import java.util.Properties;
 public class LibraryController {
     private Library library;
 
-    public LibraryController(DatabaseConnector databaseConnector) {
-        library = new Library(new BookRepoDatabase(databaseConnector),
-                new ReservationRepoDatabase(databaseConnector));
+    public LibraryController(Repository<Book> bookRepo,
+                             Repository<Reservation> reservationRepo) {
+        library = new Library(bookRepo, reservationRepo);
     }
 
     /*

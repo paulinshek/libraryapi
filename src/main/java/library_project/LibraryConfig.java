@@ -11,22 +11,4 @@ import org.springframework.context.annotation.Configuration;
  */
 //@Configuration
 //public class LibraryConfig {
-//
-//    @Bean
-//    public String dburl() {
-//        return "jdbc:mysql://localhost:3306/test_schema";
-//    }
-//    @Bean
-//    public String user() {
-//        return "user";
-//    }
-//
-//    @Bean
-//    public String password() {
-//        return "1234";
-//    }
-//    @Bean
-//    public DatabaseConnector databaseConnector() {
-//        return new DatabaseConnector(dburl(), user(), password());
-//    }
 //}
