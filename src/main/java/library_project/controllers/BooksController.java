@@ -3,6 +3,7 @@ package library_project.controllers;
 import java.util.Iterator;
 import java.util.Properties;
 
+import library_project.databasetools.DatabaseConnector;
 import library_project.repos.BookRepoDatabase;
 import library_project.repos.FilledRepository;
 import library_project.repos.Repository;
@@ -14,15 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class BooksController {
     private Repository<Book> bookRepo;
 
-    public BooksController()
+    public BooksController(DatabaseConnector databaseConnector)
     {
-        String dbUrl = "jdbc:mysql://localhost:3306/test_schema";
-
-        Properties connectionProps =  new Properties();
-        connectionProps.put("user", "root");
-        connectionProps.put("password", "1234");
-
-        bookRepo = new BookRepoDatabase(dbUrl, connectionProps);
+        bookRepo = new BookRepoDatabase(databaseConnector);
     }
 
     @RequestMapping(value="/books",method=RequestMethod.GET)

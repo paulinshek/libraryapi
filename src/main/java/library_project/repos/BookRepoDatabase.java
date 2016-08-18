@@ -1,9 +1,15 @@
 package library_project.repos;
 
 import library_project.databasetools.BookParser;
+import library_project.databasetools.DatabaseConnector;
 import library_project.databasetools.DatabaseIterator;
 import library_project.models.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 
+import javax.annotation.Resource;
 import java.sql.*;
 import java.util.Iterator;
 import java.util.Properties;
@@ -12,18 +18,15 @@ import java.util.Properties;
  * Implement book repository but with a database backend
  */
 public class BookRepoDatabase implements Repository<Book> {
-    private String dburl;
-    private Properties connectionProps;
+    private DatabaseConnector databaseConnector;
 
-    public BookRepoDatabase(String dburl, Properties connectionProps) {
-        this.dburl = dburl;
-        this.connectionProps = connectionProps;
+    public BookRepoDatabase(DatabaseConnector databaseConnector){
+        this.databaseConnector = databaseConnector;
     }
 
     @Override
     public Book get(int id) {
-        DatabaseIterator<Book> bookIterator = new DatabaseIterator<Book>(dburl,
-                connectionProps,
+        DatabaseIterator<Book> bookIterator = new DatabaseIterator<Book>(databaseConnector,
                 "SELECT * FROM books WHERE id =" + id,
                 BookParser.INSTANCE);
         Book res = null;
@@ -36,8 +39,7 @@ public class BookRepoDatabase implements Repository<Book> {
 
     @Override
     public Iterator<Book> getAll() {
-        return new DatabaseIterator<Book>(dburl,
-                connectionProps,
+        return new DatabaseIterator<Book>(databaseConnector,
                 "SELECT * FROM books",
                 BookParser.INSTANCE);
     }
@@ -48,7 +50,7 @@ public class BookRepoDatabase implements Repository<Book> {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DriverManager.getConnection(dburl, connectionProps);
+            conn = databaseConnector.getConnection();
 
             pstmt = conn.prepareStatement("INSERT INTO books (id, isbn, title, author, publishDate) " +
                     "VALUES (?, ?, ?, ?, ?)");
@@ -72,7 +74,7 @@ public class BookRepoDatabase implements Repository<Book> {
         PreparedStatement pstmt = null;
 
         try {
-            conn = DriverManager.getConnection(dburl, connectionProps);
+            conn = databaseConnector.getConnection();
 
             pstmt = conn.prepareStatement("DELETE FROM books WHERE id = " + id);
             pstmt.executeUpdate();
