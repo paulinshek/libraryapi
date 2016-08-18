@@ -12,23 +12,17 @@ import java.util.Properties;
  */
 public class DatabaseConnector {
     private String dburl;
-    private String user;
-    private String password;
+    private Properties connectionProps;
 
-    public void setDburl(String dburl){
+    public DatabaseConnector(String dburl, String user, String password){
         this.dburl = dburl;
-    }
-
-    public void setUser(String user){ this.user = user; }
-
-    public void setPassword(String password){
-        this.password = password;
+        connectionProps = new Properties();
+        connectionProps.put("user", user);
+        connectionProps.put("password", password);
     }
 
     public Connection getConnection(){
-        Properties connectionProps = new Properties();
-        connectionProps.put("user", user);
-        connectionProps.put("password", password);
+
 
         try {
             return DriverManager.getConnection(dburl, connectionProps);
