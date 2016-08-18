@@ -1,13 +1,14 @@
 package library_project.databasetools;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
 /**
- * Bean
+ *
  */
 public class DatabaseConnector {
     private String dburl;
@@ -18,10 +19,8 @@ public class DatabaseConnector {
         this.dburl = dburl;
     }
 
-    @Bean
     public void setUser(String user){ this.user = user; }
 
-    @Bean
     public void setPassword(String password){
         this.password = password;
     }
