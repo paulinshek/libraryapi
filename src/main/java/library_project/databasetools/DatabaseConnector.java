@@ -1,33 +1,36 @@
 package library_project.databasetools;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
 /**
- * Created by pshek on 17/08/2016.
+ * Bean
  */
 public class DatabaseConnector {
-    String dburl;
-    Properties connectionProps;
+    private String dburl;
+    private String user;
+    private String password;
 
     public void setDburl(String dburl){
         this.dburl = dburl;
     }
 
-    public void setUser(String user){
-        connectionProps.put("user", user);
-    }
+    @Bean
+    public void setUser(String user){ this.user = user; }
 
+    @Bean
     public void setPassword(String password){
-        connectionProps.put("password", password);
+        this.password = password;
     }
 
     public Connection getConnection(){
+        Properties connectionProps = new Properties();
+        connectionProps.put("user", user);
+        connectionProps.put("password", password);
+
         try {
             return DriverManager.getConnection(dburl, connectionProps);
         } catch (Exception e) {

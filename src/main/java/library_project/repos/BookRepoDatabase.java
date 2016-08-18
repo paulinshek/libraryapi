@@ -4,8 +4,10 @@ import library_project.databasetools.BookParser;
 import library_project.databasetools.DatabaseConnector;
 import library_project.databasetools.DatabaseIterator;
 import library_project.models.Book;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.sql.*;
 import java.util.Iterator;
@@ -14,13 +16,13 @@ import java.util.Properties;
 /**
  * Implement book repository but with a database backend
  */
+//@ContextConfiguration("/Beans.xml")
 public class BookRepoDatabase implements Repository<Book> {
+    //@Autowired
     private DatabaseConnector databaseConnector;
 
-    public BookRepoDatabase() {
-        ApplicationContext context =
-                new ClassPathXmlApplicationContext("Beans.xml");
-
+    public BookRepoDatabase(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("/Beans.xml");
         databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
     }
 
