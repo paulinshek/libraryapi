@@ -9,7 +9,7 @@ import java.sql.SQLException;
  * Singleton
  */
 public class ReservationParser implements RowParser<Reservation> {
-    public static ReservationParser INSTANCE = new ReservationParser();
+    public static final ReservationParser INSTANCE = new ReservationParser();
     private ReservationParser() {}
 
     @Override

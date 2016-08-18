@@ -9,7 +9,7 @@ import java.sql.SQLException;
  * Created by pshek on 16/08/2016.
  */
 public class BookParser implements RowParser<Book> {
-    public static BookParser INSTANCE = new BookParser();
+    public static final BookParser INSTANCE = new BookParser();
 
     private BookParser(){}
 
