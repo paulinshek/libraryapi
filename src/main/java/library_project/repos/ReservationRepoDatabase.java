@@ -7,8 +7,10 @@ import library_project.models.Reservation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.annotation.Resource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -21,12 +23,13 @@ import java.util.Properties;
  */
 //@ContextConfiguration("/Beans.xml")
 public class ReservationRepoDatabase implements Repository<Reservation> {
-    //@Autowired
-    private DatabaseConnector databaseConnector;
-
-    public ReservationRepoDatabase(){
-        ApplicationContext context = new ClassPathXmlApplicationContext("/Beans.xml");
-        databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
+    DatabaseConnector databaseConnector;
+//    public ReservationRepoDatabase(){
+//        ApplicationContext context = new ClassPathXmlApplicationContext("/Beans.xml");
+//        databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
+//    }
+    public ReservationRepoDatabase(DatabaseConnector databaseConnector){
+        this.databaseConnector = databaseConnector;
     }
 
     @Override
@@ -51,14 +54,13 @@ public class ReservationRepoDatabase implements Repository<Reservation> {
                 ReservationParser.INSTANCE);
     }
 
-    @Override
+    @Override @Resource
     public void add(Reservation reservation) {
         Connection conn = null;
         PreparedStatement pstmt = null;
 
         try {
             conn = databaseConnector.getConnection();
-
             pstmt = conn.prepareStatement("INSERT INTO reservations " +
                     "VALUES (?, ?, ?, ?, ?)");
             pstmt.setInt(1, reservation.getId());

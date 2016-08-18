@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.annotation.Resource;
 import java.sql.*;
 import java.util.Iterator;
 import java.util.Properties;
@@ -21,9 +22,13 @@ public class BookRepoDatabase implements Repository<Book> {
     //@Autowired
     private DatabaseConnector databaseConnector;
 
-    public BookRepoDatabase(){
-        ApplicationContext context = new ClassPathXmlApplicationContext("/Beans.xml");
-        databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
+//    public BookRepoDatabase(){
+//        ApplicationContext context = new ClassPathXmlApplicationContext("/Beans.xml");
+//        databaseConnector = (DatabaseConnector) context.getBean("databaseConnector");
+//    }
+
+    public BookRepoDatabase(DatabaseConnector databaseConnector){
+        this.databaseConnector = databaseConnector;
     }
 
     @Override

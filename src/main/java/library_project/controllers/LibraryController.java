@@ -1,5 +1,6 @@
 package library_project.controllers;
 
+import library_project.databasetools.DatabaseConnector;
 import library_project.models.Book;
 import library_project.models.BookIsOutException;
 import library_project.models.Library;
@@ -20,9 +21,9 @@ import java.util.Properties;
 public class LibraryController {
     private Library library;
 
-    public LibraryController() {
-        library = new Library(new BookRepoDatabase(),
-                new ReservationRepoDatabase());
+    public LibraryController(DatabaseConnector databaseConnector) {
+        library = new Library(new BookRepoDatabase(databaseConnector),
+                new ReservationRepoDatabase(databaseConnector));
     }
 
     /*

@@ -22,8 +22,6 @@ public class DatabaseConnector {
     }
 
     public Connection getConnection(){
-
-
         try {
             return DriverManager.getConnection(dburl, connectionProps);
         } catch (Exception e) {

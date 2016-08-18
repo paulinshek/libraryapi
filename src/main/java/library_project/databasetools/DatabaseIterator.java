@@ -2,6 +2,7 @@ package library_project.databasetools;
 
 import library_project.models.Book;
 
+import javax.annotation.Resource;
 import java.sql.*;
 import java.util.Iterator;
 import java.util.Properties;
@@ -10,23 +11,21 @@ import java.util.Properties;
  * Created by pshek on 16/08/2016.
  */
 public class DatabaseIterator<E> implements Iterator<E> {
-    Connection conn;
-    ResultSet rs;
-    Statement stmt;
-    boolean currRowHasBeenRead;
-    boolean hasNext;
-    RowParser<E> rowParser;
+    private Connection conn;
+    private ResultSet rs;
+    private Statement stmt;
+    private boolean currRowHasBeenRead;
+    private boolean hasNext;
+    private RowParser<E> rowParser;
 
     public DatabaseIterator(DatabaseConnector databaseConnector, String queryString, RowParser<E> rowParser) {
-        conn = null;
+        conn = databaseConnector.getConnection();
         stmt = null;
         rs = null;
 
         this.rowParser = rowParser;
 
         try {
-            conn = databaseConnector.getConnection();
-
             stmt = conn.createStatement();
             rs = stmt.executeQuery(queryString);
             hasNext = rs.next();
