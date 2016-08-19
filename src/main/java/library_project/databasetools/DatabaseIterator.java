@@ -1,11 +1,7 @@
 package library_project.databasetools;
 
-import library_project.models.Book;
-
-import javax.annotation.Resource;
 import java.sql.*;
 import java.util.Iterator;
-import java.util.Properties;
 
 /**
  * Created by pshek on 16/08/2016.

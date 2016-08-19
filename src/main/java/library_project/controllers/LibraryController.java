@@ -1,13 +1,10 @@
 package library_project.controllers;
 
-import library_project.databasetools.DatabaseConnector;
 import library_project.models.Book;
 import library_project.models.BookIsOutException;
 import library_project.models.Library;
 import library_project.models.Reservation;
-import library_project.repos.BookRepoDatabase;
 import library_project.repos.Repository;
-import library_project.repos.ReservationRepoDatabase;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
