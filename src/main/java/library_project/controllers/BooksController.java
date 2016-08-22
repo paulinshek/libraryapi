@@ -2,9 +2,6 @@ package library_project.controllers;
 
 import java.util.Iterator;
 
-import library_project.databasetools.DatabaseConnector;
-import library_project.repos.BookRepoDatabase;
-import library_project.repos.BookRepository;
 import library_project.repos.Repository;
 import library_project.models.Book;
 import org.springframework.web.bind.annotation.*;

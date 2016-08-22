@@ -1,5 +1,14 @@
 package library_project.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "books")
 public class Book {
 
     private int id;
@@ -25,6 +34,9 @@ public class Book {
 
     public Book() {}
 
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy="increment")
     public int getId() {
         return id;
     }

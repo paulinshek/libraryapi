@@ -4,9 +4,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-/**
- * Created by pshek on 12/08/2016.
- */
 public class Reservation {
     private int reservationId;
     private int bookId;
