@@ -17,14 +17,14 @@ public class BookRepository implements Repository<Book> {
     }
 
     @Override
-    public Book get(int id) {
+    public Book get(Long id) {
         Iterator<Book> bookIterator = bookRepository.iterator();
         Book currBook = null;
         boolean found = false;
 
         while (bookIterator.hasNext() & !found) {
             currBook = bookIterator.next();
-            found = currBook.getId() == id;
+            found = currBook.getId().equals(id);
         }
 
         return currBook;
@@ -37,12 +37,12 @@ public class BookRepository implements Repository<Book> {
 
     @Override
     public void add(Book book) {
-        book.setId(bookRepository.size());
+        book.setId(null);
         bookRepository.add(book);
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(Long id) {
         bookRepository.remove(get(id));
     }
 }

@@ -9,8 +9,8 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Table(name = "reservations")
 public class Reservation {
-    private int reservationId;
-    private int bookId;
+    private Long reservationId;
+    private Long bookId;
 
     private DateTimeFormatter dateFormatter;
     private String startDate;
@@ -22,7 +22,7 @@ public class Reservation {
         dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
     }
 
-    public Reservation(int bookId) {
+    public Reservation(Long bookId) {
         this();
 
         startDate = LocalDate.now().format(dateFormatter);
@@ -33,7 +33,7 @@ public class Reservation {
         out = true;
     }
 
-    public Reservation(int reservationId, int bookId, String startDate, String endDate, boolean out) {
+    public Reservation(Long reservationId, Long bookId, String startDate, String endDate, boolean out) {
         this();
         this.bookId = bookId;
         setId(reservationId);
@@ -56,11 +56,11 @@ public class Reservation {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
-    public int getId() {
+    public Long getId() {
         return reservationId;
     }
 
-    public void setId(int reservationId) {
+    public void setId(Long reservationId) {
         this.reservationId = reservationId;
     }
 
@@ -72,11 +72,11 @@ public class Reservation {
         this.out = out;
     }
 
-    public int getBookId() {
+    public Long getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) { this.bookId = bookId; }
+    public void setBookId(Long bookId) { this.bookId = bookId; }
 
     public String getStartDate() {
         return startDate;

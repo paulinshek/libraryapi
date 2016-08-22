@@ -61,7 +61,7 @@ public class DataAccess {
         return result;
     }
 
-    public Book getBook(int id){
+    public Book getBook(Long id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -72,7 +72,7 @@ public class DataAccess {
         return result;
     }
 
-    public Reservation getReservation(int id){
+    public Reservation getReservation(Long id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -83,7 +83,7 @@ public class DataAccess {
         return result;
     }
 
-    public void removeBook(int id){
+    public void removeBook(Long id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
@@ -94,7 +94,7 @@ public class DataAccess {
         session.close();
     }
 
-    public void removeReservation(int id){
+    public void removeReservation(Long id){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 

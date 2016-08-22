@@ -13,7 +13,7 @@ public class BookRepoHibernate implements Repository<Book> {
     }
 
     @Override
-    public Book get(int id) {
+    public Book get(Long id) {
         return  hibernateAccess.getBook(id);
     }
 
@@ -28,7 +28,7 @@ public class BookRepoHibernate implements Repository<Book> {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(Long id) {
         hibernateAccess.removeBook(id);
     }
 }

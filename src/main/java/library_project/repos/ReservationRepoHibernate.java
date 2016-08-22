@@ -16,7 +16,7 @@ public class ReservationRepoHibernate implements Repository<Reservation> {
     }
 
     @Override
-    public Reservation get(int id) {
+    public Reservation get(Long id) {
         return hibernateAccess.getReservation(id);
     }
 
@@ -31,7 +31,7 @@ public class ReservationRepoHibernate implements Repository<Reservation> {
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(Long id) {
         hibernateAccess.removeReservation(id);
     }
 }
