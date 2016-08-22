@@ -18,9 +18,8 @@ import java.util.Properties;
 public class LibraryController {
     private Library library;
 
-    public LibraryController(Repository<Book> bookRepo,
-                             Repository<Reservation> reservationRepo) {
-        library = new Library(bookRepo, reservationRepo);
+    public LibraryController(Library library) {
+        this.library = library;
     }
 
     /*
