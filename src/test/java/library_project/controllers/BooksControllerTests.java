@@ -20,33 +20,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import library_project.Application;
+import library_project.repos.BookRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Application.class)
-@WebAppConfiguration
+@RunWith(SpringRunner.class)
 public class BooksControllerTests {
-
-	@Autowired
-	private WebApplicationContext ctx;
-
 	private MockMvc mockMvc;
+    private BookRepository bookRepo;
 
 	@Before
 	public void setUp() {
-		this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+	    bookRepo = new BookRepository();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(new BooksController(bookRepo)).build();
 	}
 
 	@Test
@@ -54,7 +46,6 @@ public class BooksControllerTests {
 		this.mockMvc.perform(get("/api/books/books"))
 				.andDo(print())
 				.andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));
 	}
-
 }
