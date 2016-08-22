@@ -1,45 +1,77 @@
 package library_project.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import library_project.Application;
+import library_project.models.Book;
+import library_project.models.Library;
+import library_project.models.Reservation;
+import library_project.repos.BookRepository;
+import library_project.repos.Repository;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.json.JacksonTester;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import java.util.Arrays;
+import java.util.Iterator;
+
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * Created by pshek on 18/08/2016.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = Application.class)
-@WebAppConfiguration
-@Import(TestConfig.class)
 public class LibraryControllerTests {
-    @Autowired
-    private WebApplicationContext ctx;
 
     private MockMvc mockMvc;
 
+    private static Library library;
+
     @Before
-    public void setUp() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(ctx).build();
+    public void setUp() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JacksonTester.initFields(this, objectMapper);
+
+        MockitoAnnotations.initMocks(this);
+        library = Mockito.mock(Library.class);
+        this.mockMvc = MockMvcBuilders.standaloneSetup(new LibraryController(library)).build();
+
+        when(library.requestBook(any(Integer.class))).thenReturn(1);
+
     }
 
     @Test
-    public void tryMe() throws Exception {
+    public void displayAllReservations() throws Exception {
+        Iterator<Reservation> resIt = Arrays.asList(
+                new Reservation(1, 1, "08-Aug-2016", "20-Aug-2016", true),
+                new Reservation(2, 2, "01-May-2016", "15-May-2016", true)).iterator();
 
-        this.mockMvc.perform(get("/api/reservations"))
+        when(library.getAllReservations()).thenReturn(resIt);
+
+        mockMvc.perform(get("/api/library/reservations"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].bookId").value(1))
+                .andExpect(jsonPath("$[0].startDate").value("08-Aug-2016"))
+                .andExpect(jsonPath("$[0].endDate").value("20-Aug-2016"))
+                .andExpect(jsonPath("$[0].out").value(true));
     }
 }
