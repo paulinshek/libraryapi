@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import library_project.databasetools.DatabaseConnector;
 import library_project.repos.BookRepoDatabase;
+import library_project.repos.BookRepository;
 import library_project.repos.Repository;
 import library_project.models.Book;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,8 @@ import org.springframework.web.bind.annotation.*;
 public class BooksController {
     private Repository<Book> bookRepo;
 
-    public BooksController(DatabaseConnector databaseConnector)
-    {
-        bookRepo = new BookRepoDatabase(databaseConnector);
+    public BooksController(Repository<Book> bookRepo){
+        this.bookRepo = bookRepo;
     }
 
     @RequestMapping(value="/books",method=RequestMethod.GET)

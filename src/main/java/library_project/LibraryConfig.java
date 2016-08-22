@@ -1,13 +1,10 @@
 package library_project;
 
-import library_project.controllers.BooksController;
-import library_project.controllers.LibraryController;
 import library_project.databasetools.DatabaseConnector;
 import library_project.models.Book;
+import library_project.models.Library;
 import library_project.models.Reservation;
-import library_project.repos.BookRepoDatabase;
-import library_project.repos.Repository;
-import library_project.repos.ReservationRepoDatabase;
+import library_project.repos.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,6 +16,11 @@ public class LibraryConfig {
     @Bean
     public Repository<Reservation> reservationRepoDatabase() {
         return new ReservationRepoDatabase(databaseConnector());
+    }
+
+    @Bean
+    public Library library() {
+        return new Library(bookRepoDatabase(), reservationRepoDatabase());
     }
 
     @Bean

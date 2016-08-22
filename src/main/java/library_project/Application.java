@@ -21,7 +21,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 @SpringBootApplication
-@Import(LibraryConfig.class)
+@ContextConfiguration
 public class Application {
 
     public static void main(String[] args) {
