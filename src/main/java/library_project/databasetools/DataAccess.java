@@ -14,19 +14,13 @@ public class DataAccess {
     SessionFactory sessionFactory;
 
     public DataAccess() {
-        // SessionFactory is set up once for an application
-
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        //try {
-            sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
-        //}
-        //catch (Exception e) {
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
-            // so destroy it manually.
-            //StandardServiceRegistryBuilder.destroy( registry );
-        //}
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        try {
+            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
     }
 
     public void addBook(Book newBook) {
@@ -68,19 +62,47 @@ public class DataAccess {
     }
 
     public Book getBook(int id){
-        return null;
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Book result = (Book) session.createQuery("from Book b where b.id=" + id).list().get(0);
+
+        session.getTransaction().commit();
+        session.close();
+        return result;
     }
 
     public Reservation getReservation(int id){
-        return null;
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Reservation result = (Reservation) session.createQuery("from Reservation r where r.id=" + id).list().get(0);
+
+        session.getTransaction().commit();
+        session.close();
+        return result;
     }
 
     public void removeBook(int id){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
+        Book result = (Book) session.createQuery("from Book b where b.id=" + id).list().get(0);
+        session.remove(result);
+
+        session.getTransaction().commit();
+        session.close();
     }
 
     public void removeReservation(int id){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
 
+        Reservation result = (Reservation) session.createQuery("from Reservation r where r.id=" + id).list().get(0);
+        session.remove(result);
+
+        session.getTransaction().commit();
+        session.close();
     }
 
 }
