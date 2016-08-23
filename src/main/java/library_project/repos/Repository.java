@@ -6,8 +6,8 @@ import java.util.Iterator;
  * Created by pshek on 11/08/2016.
  */
 public interface Repository<E> {
-    E get(Long id);
+    E get(long id);
     Iterator<E> getAll();
     void add(E entity);
-    void remove(Long id);
+    void remove(long id);
 }
