@@ -2,9 +2,6 @@ package library_project.controllers;
 
 import java.util.Iterator;
 
-import library_project.databasetools.DatabaseConnector;
-import library_project.repos.BookRepoDatabase;
-import library_project.repos.BookRepository;
 import library_project.repos.Repository;
 import library_project.models.Book;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +22,7 @@ public class BooksController {
     }
 
     @RequestMapping(value="/values/{id}",method=RequestMethod.GET)
-    public Book get(@PathVariable("id") int id) {
+    public Book get(@PathVariable("id") long id) {
         return bookRepo.get(id);
     }
 
@@ -36,12 +33,12 @@ public class BooksController {
     }
 
     @RequestMapping(value="/values/{id}",method=RequestMethod.DELETE)
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable("id") long id) {
         bookRepo.remove(id);
     }
 
     @RequestMapping(value="/values/{id}", method=RequestMethod.PUT)
-    public void put(@RequestBody Book newBook, @PathVariable("id") int id)
+    public void put(@RequestBody Book newBook, @PathVariable("id") long id)
     {
         bookRepo.add(newBook);
         newBook.setId(id);

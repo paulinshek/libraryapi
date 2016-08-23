@@ -1,6 +1,6 @@
 package library_project;
 
-import library_project.databasetools.DatabaseConnector;
+import library_project.databasetools.DataAccess;
 import library_project.models.Book;
 import library_project.models.Library;
 import library_project.models.Reservation;
@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
 public class LibraryConfig {
     @Bean
     public Repository<Reservation> reservationRepoDatabase() {
-        return new ReservationRepoDatabase(databaseConnector());
+        return new ReservationRepoHibernate(databaseConnector());
     }
 
     @Bean
@@ -25,11 +25,12 @@ public class LibraryConfig {
 
     @Bean
     public Repository<Book> bookRepoDatabase() {
-        return new BookRepoDatabase(databaseConnector());
+        return new BookRepoHibernate(databaseConnector());
     }
 
     @Bean
-    public DatabaseConnector databaseConnector() {
-        return new DatabaseConnector("jdbc:mysql://localhost:3306/test_schema?autoReconnect=true&useSSL=false", "root", "1234");
+    public DataAccess databaseConnector() {
+        DataAccess dao = new DataAccess();
+        return dao;
     }
 }

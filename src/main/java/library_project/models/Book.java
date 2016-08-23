@@ -1,8 +1,14 @@
 package library_project.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "books")
 public class Book {
 
-    private int id;
+    private long id;
     private String isbn;
     private String title;
     private String author;
@@ -15,7 +21,7 @@ public class Book {
         this.publishDate = publishDate;
     }
 
-    public Book(int id, String isbn, String title, String author, String publishDate) {
+    public Book(long id, String isbn, String title, String author, String publishDate) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
@@ -25,11 +31,14 @@ public class Book {
 
     public Book() {}
 
-    public int getId() {
+    @Id
+    @GeneratedValue(generator="identity")
+    @GenericGenerator(name="identity", strategy="identity")
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) { this.id = id; }
+    public void setId(long id) { this.id = id; }
 
     public String getIsbn() {
         return isbn;

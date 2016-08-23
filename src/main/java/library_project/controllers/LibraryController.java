@@ -48,7 +48,7 @@ public class LibraryController {
      * Gets the status of a book
      */
     @RequestMapping(value="/reservations/status/{bookId}", method=RequestMethod.GET)
-    public String isOut(@PathVariable("bookId") int bookId) {
+    public String isOut(@PathVariable("bookId") long bookId) {
         if (library.isOut(bookId)) return "Out";
         return "In";
     }
@@ -57,7 +57,7 @@ public class LibraryController {
      * Return a book with reservationId
      */
     @RequestMapping(value="/reservations/{reservationId}", method=RequestMethod.DELETE)
-    public String returnBook(@PathVariable("reservationId") int reservationId) {
+    public String returnBook(@PathVariable("reservationId") long reservationId) {
         library.returnBook(reservationId);
         return "Book has now been returned";
     }
@@ -66,7 +66,7 @@ public class LibraryController {
      * Reserve a book with bookId, returns the reservationId
      */
     @RequestMapping(value="/reservations/book/{bookId}", method=RequestMethod.POST)
-    public int requestBook(@PathVariable("bookId") int bookId) throws BookIsOutException {
+    public long requestBook(@PathVariable("bookId") long bookId) throws BookIsOutException {
         return library.requestBook(bookId);
     }
 
