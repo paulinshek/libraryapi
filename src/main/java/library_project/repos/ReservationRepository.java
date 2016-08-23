@@ -1,6 +1,5 @@
 package library_project.repos;
 
-import library_project.models.Book;
 import library_project.models.Reservation;
 
 import java.util.*;

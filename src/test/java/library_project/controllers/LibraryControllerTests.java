@@ -1,30 +1,19 @@
 package library_project.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import library_project.Application;
-import library_project.models.Book;
 import library_project.models.Library;
 import library_project.models.Reservation;
-import library_project.repos.BookRepository;
-import library_project.repos.Repository;
 import org.junit.Before;
 import org.junit.Test;
 
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.json.JacksonTester;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 import java.util.Iterator;
