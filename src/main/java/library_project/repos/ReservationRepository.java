@@ -16,14 +16,14 @@ public class ReservationRepository implements Repository<Reservation> {
     }
 
     @Override
-    public synchronized Reservation get(int reservationId) {
+    public synchronized Reservation get(long reservationId) {
         Iterator<Reservation> resIt = allReservations.iterator();
         boolean found = false;
         Reservation currRes = null;
 
         while (resIt.hasNext() & !found){
             currRes = resIt.next();
-            found = currRes.getId() == reservationId;
+            found = currRes.getId()==reservationId;
         }
 
         return currRes;
@@ -40,7 +40,7 @@ public class ReservationRepository implements Repository<Reservation> {
     }
 
     @Override
-    public synchronized void remove(int reservationId) {
+    public synchronized void remove(long reservationId) {
         allReservations.remove(get(reservationId));
     }
 

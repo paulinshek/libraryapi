@@ -20,7 +20,7 @@ public class Library {
         return allReservations.getAll();
     }
 
-    public int requestBook(int bookId) throws BookIsOutException {
+    public long requestBook(long bookId) throws BookIsOutException {
         Reservation newReservation = null;
         synchronized (this) {
             // check that the book is *not* out
@@ -33,7 +33,7 @@ public class Library {
         throw new BookIsOutException();
     }
 
-    public void returnBook(int reservationId) {
+    public void returnBook(long reservationId) {
         allReservations.remove(reservationId);
     }
 
@@ -47,7 +47,7 @@ public class Library {
 
         while(allResIt.hasNext()){
             currRes = allResIt.next();
-            if (currRes.getOut()){
+            if (currRes.getIsOut()){
                 availableBooks.remove(currRes.getBookId()); // if book is out, then remove from return object
             }
         }
@@ -62,7 +62,7 @@ public class Library {
 
         while (allResIt.hasNext()) {
             currRes = allResIt.next();
-            if (currRes.getOut()) { // if reservation is active then book is unavailable
+            if (currRes.getIsOut()) { // if reservation is active then book is unavailable
                 Book outBook = allBooks.get(currRes.getBookId());
                 unavailableBooks.add(outBook);
             }
@@ -90,7 +90,7 @@ public class Library {
     /*
      * Finds all reservations related to bookId
      */
-    private Iterator<Reservation> findReservations(int bookId) {
+    private Iterator<Reservation> findReservations(long bookId) {
         Repository<Reservation> foundReservations = new ReservationRepository();
         Iterator<Reservation> reservationIterator = allReservations.getAll();
         Reservation currReservation = null;
@@ -107,12 +107,12 @@ public class Library {
         return foundReservations.getAll();
     }
 
-    public boolean isOut(int bookId) {
+    public boolean isOut(long bookId) {
         Iterator<Reservation> relevantReservations = findReservations(bookId);
         boolean isOut = false;
 
         while (relevantReservations.hasNext() & !isOut){
-            isOut = relevantReservations.next().getOut();
+            isOut = relevantReservations.next().getIsOut();
         }
         return isOut;
     }

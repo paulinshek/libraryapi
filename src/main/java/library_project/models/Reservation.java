@@ -9,8 +9,8 @@ import java.time.format.DateTimeFormatter;
 @Entity
 @Table(name = "reservations")
 public class Reservation {
-    private int reservationId;
-    private int bookId;
+    private long reservationId;
+    private long bookId;
 
     private DateTimeFormatter dateFormatter;
     private String startDate;
@@ -22,7 +22,7 @@ public class Reservation {
         dateFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy");
     }
 
-    public Reservation(int bookId) {
+    public Reservation(long bookId) {
         this();
 
         startDate = LocalDate.now().format(dateFormatter);
@@ -33,13 +33,13 @@ public class Reservation {
         out = true;
     }
 
-    public Reservation(int reservationId, int bookId, String startDate, String endDate, boolean out) {
+    public Reservation(long reservationId, long bookId, String startDate, String endDate, boolean out) {
         this();
         this.bookId = bookId;
         setId(reservationId);
         setStartDate(startDate);
         setEndDate(endDate);
-        setOut(out);
+        setIsOut(out);
 
     }
 
@@ -56,27 +56,28 @@ public class Reservation {
     @Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy="increment")
-    public int getId() {
+    public long getId() {
         return reservationId;
     }
 
-    public void setId(int reservationId) {
+    public void setId(long reservationId) {
         this.reservationId = reservationId;
     }
 
-    public boolean getOut() {
+
+    public boolean getIsOut() {
         return out;
     }
 
-    public void setOut(boolean out) {
+    public void setIsOut(boolean out) {
         this.out = out;
     }
 
-    public int getBookId() {
+    public long getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) { this.bookId = bookId; }
+    public void setBookId(long bookId) { this.bookId = bookId; }
 
     public String getStartDate() {
         return startDate;

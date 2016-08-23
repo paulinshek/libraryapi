@@ -16,6 +16,4 @@ public class ReservationRepositoryTests {
     public void testRepositoryIsEmptyAtStart() {
         assert(!resRepo.getAll().hasNext());
     }
-
-
 }

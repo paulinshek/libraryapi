@@ -22,7 +22,7 @@ public class BooksController {
     }
 
     @RequestMapping(value="/values/{id}",method=RequestMethod.GET)
-    public Book get(@PathVariable("id") int id) {
+    public Book get(@PathVariable("id") long id) {
         return bookRepo.get(id);
     }
 
@@ -33,12 +33,12 @@ public class BooksController {
     }
 
     @RequestMapping(value="/values/{id}",method=RequestMethod.DELETE)
-    public void delete(@PathVariable("id") int id) {
+    public void delete(@PathVariable("id") long id) {
         bookRepo.remove(id);
     }
 
     @RequestMapping(value="/values/{id}", method=RequestMethod.PUT)
-    public void put(@RequestBody Book newBook, @PathVariable("id") int id)
+    public void put(@RequestBody Book newBook, @PathVariable("id") long id)
     {
         bookRepo.add(newBook);
         newBook.setId(id);

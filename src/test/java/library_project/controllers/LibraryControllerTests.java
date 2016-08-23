@@ -52,7 +52,7 @@ public class LibraryControllerTests {
         library = Mockito.mock(Library.class);
         this.mockMvc = MockMvcBuilders.standaloneSetup(new LibraryController(library)).build();
 
-        when(library.requestBook(any(Integer.class))).thenReturn(1);
+        when(library.requestBook(any(Integer.class))).thenReturn((long)1);
 
     }
 
@@ -72,6 +72,6 @@ public class LibraryControllerTests {
                 .andExpect(jsonPath("$[0].bookId").value(1))
                 .andExpect(jsonPath("$[0].startDate").value("08-Aug-2016"))
                 .andExpect(jsonPath("$[0].endDate").value("20-Aug-2016"))
-                .andExpect(jsonPath("$[0].out").value(true));
+                .andExpect(jsonPath("$[0].isOut").value(true));
     }
 }
